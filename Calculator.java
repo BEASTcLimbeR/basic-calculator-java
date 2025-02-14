@@ -4,14 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Simple Calculator with GUI
- * This calculator performs basic math operations: addition, subtraction, multiplication, and division
+ * iPhone-Style Calculator with GUI
+ * This calculator performs basic math operations with an iPhone-inspired design
  * 
  * Features:
- * - Clean, modern interface
- * - Number buttons (0-9)
- * - Operation buttons (+, -, *, /)
- * - Clear and equals buttons
+ * - iPhone-style dark theme interface
+ * - Rounded buttons with proper colors
+ * - Number buttons (0-9) in dark gray
+ * - Operation buttons (+, -, *, /) in orange
+ * - Clear and equals buttons with proper styling
  * - Error handling for division by zero
  */
 public class Calculator extends JFrame implements ActionListener {
@@ -24,21 +25,33 @@ public class Calculator extends JFrame implements ActionListener {
     private JButton equalsButton;         // Button to calculate the result
     private JButton decimalButton;        // Button for decimal point
     
+    // iPhone-style colors
+    private static final Color DARK_BACKGROUND = new Color(0, 0, 0);
+    private static final Color DISPLAY_BACKGROUND = new Color(0, 0, 0);
+    private static final Color DISPLAY_TEXT = new Color(255, 255, 255);
+    private static final Color GRAY_BUTTON = new Color(160, 160, 160);
+    private static final Color DARK_GRAY_BUTTON = new Color(51, 51, 51);
+    private static final Color ORANGE_BUTTON = new Color(255, 149, 0);
+    private static final Color ORANGE_BUTTON_PRESSED = new Color(255, 165, 0);
+    
     // Calculator logic variables
     private double firstNumber = 0;       // Stores the first number in an operation
     private String operation = "";        // Stores the current operation (+, -, *, /)
     private boolean operationPressed = false; // Tracks if an operation button was pressed
     
     /**
-     * Constructor - sets up the calculator GUI
+     * Constructor - sets up the iPhone-style calculator GUI
      */
     public Calculator() {
-        // Set up the main window
-        setTitle("Simple Calculator");
+        // Set up the main window with iPhone-style dimensions
+        setTitle("iPhone Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 400);
+        setSize(350, 500); // iPhone-like proportions
         setLocationRelativeTo(null); // Center the window on screen
         setResizable(false);
+        
+        // Set dark background
+        getContentPane().setBackground(DARK_BACKGROUND);
         
         // Create and set up the GUI components
         setupComponents();
@@ -49,52 +62,79 @@ public class Calculator extends JFrame implements ActionListener {
     }
     
     /**
-     * Creates and initializes all GUI components
+     * Creates and initializes all GUI components with iPhone-style design
      */
     private void setupComponents() {
-        // Create the display field
+        // Create the display field with iPhone-style appearance
         display = new JTextField();
-        display.setFont(new Font("Arial", Font.BOLD, 20));
+        display.setFont(new Font("SF Pro Display", Font.PLAIN, 48)); // iPhone-like font size
         display.setHorizontalAlignment(JTextField.RIGHT);
         display.setEditable(false); // Users can't type directly into the display
         display.setText("0");
+        display.setBackground(DISPLAY_BACKGROUND);
+        display.setForeground(DISPLAY_TEXT);
+        display.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        // Create number buttons (0-9)
+        // Create number buttons (0-9) with iPhone-style colors
         numberButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
             numberButtons[i] = new JButton(String.valueOf(i));
-            numberButtons[i].setFont(new Font("Arial", Font.BOLD, 16));
+            numberButtons[i].setFont(new Font("SF Pro Display", Font.PLAIN, 32));
             numberButtons[i].addActionListener(this);
+            numberButtons[i].setBackground(DARK_GRAY_BUTTON);
+            numberButtons[i].setForeground(Color.WHITE);
+            numberButtons[i].setFocusPainted(false);
+            numberButtons[i].setBorderPainted(false);
+            numberButtons[i].setOpaque(true);
         }
         
-        // Create operation buttons
+        // Create operation buttons with iPhone orange color
         operationButtons = new JButton[4];
-        String[] operations = {"+", "-", "*", "/"};
+        String[] operations = {"+", "−", "×", "÷"}; // iPhone-style symbols
         for (int i = 0; i < 4; i++) {
             operationButtons[i] = new JButton(operations[i]);
-            operationButtons[i].setFont(new Font("Arial", Font.BOLD, 16));
+            operationButtons[i].setFont(new Font("SF Pro Display", Font.PLAIN, 32));
             operationButtons[i].addActionListener(this);
-            operationButtons[i].setBackground(new Color(255, 165, 0)); // Orange color for operations
+            operationButtons[i].setBackground(ORANGE_BUTTON);
+            operationButtons[i].setForeground(Color.WHITE);
+            operationButtons[i].setFocusPainted(false);
+            operationButtons[i].setBorderPainted(false);
+            operationButtons[i].setOpaque(true);
         }
         
-        // Create other buttons
+        // Create clear button (gray for iPhone style)
         clearButton = new JButton("C");
-        clearButton.setFont(new Font("Arial", Font.BOLD, 16));
+        clearButton.setFont(new Font("SF Pro Display", Font.PLAIN, 32));
         clearButton.addActionListener(this);
-        clearButton.setBackground(new Color(255, 99, 71)); // Red color for clear
+        clearButton.setBackground(GRAY_BUTTON);
+        clearButton.setForeground(Color.BLACK);
+        clearButton.setFocusPainted(false);
+        clearButton.setBorderPainted(false);
+        clearButton.setOpaque(true);
         
+        // Create equals button (orange for iPhone style)
         equalsButton = new JButton("=");
-        equalsButton.setFont(new Font("Arial", Font.BOLD, 16));
+        equalsButton.setFont(new Font("SF Pro Display", Font.PLAIN, 32));
         equalsButton.addActionListener(this);
-        equalsButton.setBackground(new Color(50, 205, 50)); // Green color for equals
+        equalsButton.setBackground(ORANGE_BUTTON);
+        equalsButton.setForeground(Color.WHITE);
+        equalsButton.setFocusPainted(false);
+        equalsButton.setBorderPainted(false);
+        equalsButton.setOpaque(true);
         
+        // Create decimal button (dark gray for iPhone style)
         decimalButton = new JButton(".");
-        decimalButton.setFont(new Font("Arial", Font.BOLD, 16));
+        decimalButton.setFont(new Font("SF Pro Display", Font.PLAIN, 32));
         decimalButton.addActionListener(this);
+        decimalButton.setBackground(DARK_GRAY_BUTTON);
+        decimalButton.setForeground(Color.WHITE);
+        decimalButton.setFocusPainted(false);
+        decimalButton.setBorderPainted(false);
+        decimalButton.setOpaque(true);
     }
     
     /**
-     * Arranges all components in a grid layout
+     * Arranges all components in iPhone calculator layout
      */
     private void layoutComponents() {
         setLayout(new BorderLayout());
@@ -102,36 +142,78 @@ public class Calculator extends JFrame implements ActionListener {
         // Add display at the top
         add(display, BorderLayout.NORTH);
         
-        // Create button panel with grid layout
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 5, 5));
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // Create button panel with iPhone-style grid layout
+        JPanel buttonPanel = new JPanel(new GridLayout(5, 4, 8, 8));
+        buttonPanel.setBackground(DARK_BACKGROUND);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        // Add buttons in calculator layout
-        // Row 1: Clear, /, *, -
+        // iPhone calculator layout (5 rows, 4 columns)
+        // Row 1: C, ±, %, ÷
         buttonPanel.add(clearButton);
-        buttonPanel.add(operationButtons[3]); // /
-        buttonPanel.add(operationButtons[2]); // *
-        buttonPanel.add(operationButtons[1]); // -
+        buttonPanel.add(createGrayButton("±")); // Plus/minus (placeholder)
+        buttonPanel.add(createGrayButton("%"));  // Percentage (placeholder)
+        buttonPanel.add(operationButtons[3]); // ÷
         
-        // Row 2: 7, 8, 9, +
+        // Row 2: 7, 8, 9, ×
         buttonPanel.add(numberButtons[7]);
         buttonPanel.add(numberButtons[8]);
         buttonPanel.add(numberButtons[9]);
-        buttonPanel.add(operationButtons[0]); // +
+        buttonPanel.add(operationButtons[2]); // ×
         
-        // Row 3: 4, 5, 6, =
+        // Row 3: 4, 5, 6, −
         buttonPanel.add(numberButtons[4]);
         buttonPanel.add(numberButtons[5]);
         buttonPanel.add(numberButtons[6]);
-        buttonPanel.add(equalsButton);
+        buttonPanel.add(operationButtons[1]); // −
         
-        // Row 4: 1, 2, 3, 0
+        // Row 4: 1, 2, 3, +
         buttonPanel.add(numberButtons[1]);
         buttonPanel.add(numberButtons[2]);
         buttonPanel.add(numberButtons[3]);
-        buttonPanel.add(numberButtons[0]);
+        buttonPanel.add(operationButtons[0]); // +
+        
+        // Row 5: 0 (spans 2 columns), ., =
+        JPanel bottomRow = new JPanel(new GridLayout(1, 4, 8, 8));
+        bottomRow.setBackground(DARK_BACKGROUND);
+        
+        // Create wide 0 button
+        JButton zeroButton = new JButton("0");
+        zeroButton.setFont(new Font("SF Pro Display", Font.PLAIN, 32));
+        zeroButton.addActionListener(this);
+        zeroButton.setBackground(DARK_GRAY_BUTTON);
+        zeroButton.setForeground(Color.WHITE);
+        zeroButton.setFocusPainted(false);
+        zeroButton.setBorderPainted(false);
+        zeroButton.setOpaque(true);
+        
+        // Add 0 button spanning 2 columns
+        JPanel zeroPanel = new JPanel(new BorderLayout());
+        zeroPanel.setBackground(DARK_BACKGROUND);
+        zeroPanel.add(zeroButton, BorderLayout.CENTER);
+        
+        bottomRow.add(zeroPanel);
+        bottomRow.add(new JLabel("")); // Empty space
+        bottomRow.add(decimalButton);
+        bottomRow.add(equalsButton);
+        
+        buttonPanel.add(bottomRow);
         
         add(buttonPanel, BorderLayout.CENTER);
+    }
+    
+    /**
+     * Creates a gray button for iPhone-style interface
+     */
+    private JButton createGrayButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("SF Pro Display", Font.PLAIN, 32));
+        button.setBackground(GRAY_BUTTON);
+        button.setForeground(Color.BLACK);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setEnabled(false); // Disable for now (placeholders)
+        return button;
     }
     
     /**
@@ -146,9 +228,11 @@ public class Calculator extends JFrame implements ActionListener {
         if (command.matches("[0-9]")) {
             handleNumberInput(command);
         }
-        // Handle operation buttons (+, -, *, /)
-        else if (command.matches("[+\\-*/]")) {
-            handleOperationInput(command);
+        // Handle operation buttons (+, −, ×, ÷)
+        else if (command.matches("[+−×÷]")) {
+            // Convert iPhone symbols to standard symbols for calculation
+            String operation = convertSymbol(command);
+            handleOperationInput(operation);
         }
         // Handle equals button
         else if (command.equals("=")) {
@@ -161,6 +245,18 @@ public class Calculator extends JFrame implements ActionListener {
         // Handle decimal button
         else if (command.equals(".")) {
             handleDecimal();
+        }
+    }
+    
+    /**
+     * Converts iPhone-style symbols to standard operation symbols
+     */
+    private String convertSymbol(String symbol) {
+        switch (symbol) {
+            case "−": return "-";
+            case "×": return "*";
+            case "÷": return "/";
+            default: return symbol;
         }
     }
     
